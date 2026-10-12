@@ -1,0 +1,12 @@
+{
+  "name": "splunk-helper",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static classic SPL query composer and learning workbench",
+  "engines": { "node": ">=22.8" },
+  "scripts": {
+    "test": "node --test --test-isolation=none tests/core.test.cjs tests/ui.test.cjs",
+    "standalone": "node scripts/standalone.cjs"
+  },
+  "devDependencies": { "jsdom": "25.0.1" }
+}

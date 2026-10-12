@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Splunk Helper · Build a search you understand</title>
+ <meta name="description" content="A free browser-only classic SPL query builder and learning workbench. Compose filters, aggregations, tables and charts with explanations, recipes and exercises.">
+ <meta name="theme-color" content="#123c38">
+ <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23123c38'/%3E%3Cpath d='m8 9 7 7-7 7m10 0h6' fill='none' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E">
+ <link rel="stylesheet" href="./styles.css">
+ <script defer src="./core.js"></script><script defer src="./content.js"></script><script defer src="./app.js"></script>
+</head>
+<body>
+ <a class="skip" href="#main">Skip to workspace</a>
+ <header class="header"><div class="brand"><svg aria-hidden="true" viewBox="0 0 32 32"><path d="m7 9 7 7-7 7m11 0h7"/></svg><div>Splunk Helper<small>Learn by building.</small></div></div>
+ <nav aria-label="Main"><button data-view="build" class="active" aria-current="page">Build</button><button data-view="recipes">Recipes</button><button data-view="learn">Reference</button><button data-view="practice">Practice</button></nav>
+ <button id="theme" class="quiet" aria-label="Switch color theme">Dark theme</button></header>
+ <main id="main">
+ <section id="view-build" class="view">
+  <div class="page-heading"><div><h1>Build a search you understand.</h1><p>Choose the events. Ask a question. Shape the answer.</p></div><div class="heading-actions"><button data-action="reset" class="quiet">Start fresh</button><button data-action="save" class="secondary">Save search</button></div></div>
+  <div class="preset-strip"><label for="preset">Start from a question</label><select id="preset"></select><button data-action="preset" class="primary">Use this starting point</button></div>
+  <div class="workspace"><div class="composer"><div id="builder-form"></div>
+   <details class="saved-section"><summary>Saved searches <span id="saved-count"></span></summary><p class="muted">Stored only in this browser. Export a backup before changing devices.</p><div id="saved-list"></div><div class="button-row"><button data-action="export" class="secondary">Export library</button><label class="button secondary import-label">Import library<input id="import" type="file" accept=".json,application/json"></label></div></details>
+  </div><aside class="query-pane" aria-label="Generated search">
+   <div class="query-top"><div><h2>Your SPL</h2><span id="query-mode-label">Generated from the builder</span></div><button data-action="copy" class="copy-button">Copy SPL</button></div>
+   <div class="mode-switch"><button id="mode-builder" data-action="builder" class="selected">Guided builder</button><button id="mode-manual" data-action="manual">Edit SPL</button></div>
+   <label class="sr-only" for="query">Search query</label><textarea id="query" spellcheck="false" readonly aria-describedby="editor-note"></textarea>
+   <p id="editor-note" class="editor-note">Classic SPL. Copy this into Splunk’s Search &amp; Reporting app.</p>
+   <div class="query-actions"><button data-action="download" class="quiet-light">Download .spl</button><button data-action="print" class="quiet-light">Print query</button><span id="stage-count"></span></div>
+   <div id="diagnostics" aria-live="polite"></div>
+   <div class="inspect"><div class="tabbar" role="tablist" aria-label="Inspect search"><button id="tab-pipeline" role="tab" aria-selected="true" aria-controls="panel-pipeline" data-tab="pipeline">Walk the data</button><button id="tab-explain" role="tab" aria-selected="false" aria-controls="panel-explain" data-tab="explain" tabindex="-1">Explain SPL</button><button id="tab-preview" role="tab" aria-selected="false" aria-controls="panel-preview" data-tab="preview" tabindex="-1">Final output</button></div>
+    <div id="panel-pipeline" role="tabpanel" aria-labelledby="tab-pipeline"></div><div id="panel-explain" role="tabpanel" aria-labelledby="tab-explain" hidden></div><div id="panel-preview" role="tabpanel" aria-labelledby="tab-preview" hidden></div>
+   </div>
+  </aside></div>
+ </section>
+ <section id="view-recipes" class="view" hidden><div class="page-heading"><div><h1>From a question to a query.</h1><p>Worked searches you can adapt. Read the assumptions before copying.</p></div></div><div class="library-toolbar"><label for="recipe-search">Find a recipe<input id="recipe-search" type="search" placeholder="Try error rate, VIP, lookup…"></label><label for="recipe-category">Category<select id="recipe-category"><option value="">All categories</option></select></label></div><div class="library-layout"><div id="recipe-list" class="item-list" aria-label="Recipes"></div><article id="recipe-detail" class="reading-pane"></article></div></section>
+ <section id="view-learn" class="view" hidden><div class="page-heading"><div><h1>Know what each stage does.</h1><p>A field guide to composing classic SPL, from event filters to finished outputs.</p></div></div><div class="reference-nav"><button data-learn="guides" class="selected">Search thinking</button><button data-learn="commands">Command reference</button><button data-learn="syntax">Filters &amp; syntax</button></div><div id="learn-guides"></div><div id="learn-commands" hidden><label class="search-label" for="command-search">Find a command or function<input id="command-search" type="search" placeholder="Try stats, null, regex…"></label><div id="commands"></div></div><div id="learn-syntax" hidden></div></section>
+ <section id="view-practice" class="view" hidden><div class="page-heading"><div><h1>Make the search your own.</h1><p>Write it yourself, compare the structure, then run it in Splunk.</p></div><span id="practice-progress" class="progress-label"></span></div><div class="library-layout"><div id="exercise-list" class="item-list" aria-label="Exercises"></div><article id="exercise-detail" class="reading-pane"></article></div></section>
+ </main>
+ <footer><div>Independent learning tool. Not affiliated with Splunk.</div><div>Classic SPL · Local storage only · <a href="https://github.com/Joelwang22/splunker" target="_blank" rel="noopener">GitHub repository</a></div><details><summary>Sources &amp; scope</summary><p>This helper generates searches and demonstrates a supported subset on synthetic data. It does not connect to Splunk or validate arbitrary SPL. Field names and command availability depend on your environment. Recipes are read-only search examples; review their scope before running them.</p><div id="source-links"></div></details></footer>
+ <div id="toast" role="status" aria-live="polite"></div>
+ <noscript><p class="noscript">Enable JavaScript to use the interactive builder. The original Markdown cheat sheet remains available in your task folder.</p></noscript>
+</body></html>
